@@ -14,8 +14,8 @@ Transfero.Translator = function(apiKey, fromLang, toLang, options) {
 
 Transfero.Translator.prototype.translate = function(input, cb, scope) {
     this.query('Translate', {
-        from: this.from,
-        to:   this.to,
+        from: this.fromCode,
+        to:   this.toCode,
         text: input
     }, cb, scope);
 };
@@ -50,16 +50,24 @@ Transfero.Translator.prototype.nameCallback = function() {
 };
 
 Transfero.Translator.prototype.setFrom = function(from) {
-    this.from = this.langToCode(from);
+    this.fromCode = this.langToCode(from);
+    
+    if (this.fromCode) {
+        this.from = from;
+    }
 };
 
 Transfero.Translator.prototype.setTo = function(to) {
-    this.to = this.langToCode(to);
+    this.toCode = this.langToCode(to);
+    
+    if (this.toCode) {
+        this.to = to;
+    }
 };
 
 Transfero.Translator.prototype.langToCode = function(lang) {
     var code = Transfero.Languages.ISO_639_1[lang];
-    return typeof code == 'string' && code.length == 2 ? code : lang;
+    return typeof code == 'string' && code.length == 2 ? code : null;
 };
 
 Transfero.Translator.prototype.setBackend = function(backend) {
