@@ -5,13 +5,10 @@ Transfero.Translator = function(apiKey, fromLang, toLang, options) {
     
     this.setBackend(options.backend || Transfero.Backends.Microsoft);
     
-    var codes = Transfero.Languages.ISO_639_1,
-        cfrom = codes[fromLang],
-        cto   = codes[toLang];
+    this.setFrom(fromLang);
+    this.setTo(toLang);
     
     this.apiKey   = apiKey;
-    this.from     = typeof cfrom == 'string' && cfrom.length == 2 ? cfrom : (fromLang || 'fr');
-    this.to       = typeof cto == 'string' && cto.length == 2 ? cto : (toLang || 'fr');
     this._cbCount = 0;
 };
 
@@ -36,6 +33,16 @@ Transfero.Translator.prototype.buildQueryString = function(params) {
 Transfero.Translator.prototype.nameCallback = function() {
     this._cbCount += 1;
     return '__transferoCallback_' + this._cbCount;
+};
+
+Transfero.Translator.prototype.setFrom = function(from) {
+    var cfrom = Transfero.Languages.ISO_639_1[from];
+    this.from = typeof cfrom == 'string' && cfrom.length == 2 ? cfrom : from;
+};
+
+Transfero.Translator.prototype.setTo = function(to) {
+    var cto = Transfero.Languages.ISO_639_1[to];
+    this.to = typeof cto == 'string' && cto.length == 2 ? cto : to;
 };
 
 Transfero.Translator.prototype.setBackend = function(backend) {
