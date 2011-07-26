@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html><head>
+    <title>Transfero tests</title>
+    
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/transfero-min.js"></script>
+</head><body>
+    <script type="text/javascript">
+        (function() {
+            var translator = new Transfero.Translator('9C3D7533977FB33E9A0B1CDE11CFDB2B934B66AB', 'English', 'French');
+            
+            translator.translate("Hello world", function(response) {
+                console.log(response);
+            });
+        })();
+    </script>
+<body></html>
