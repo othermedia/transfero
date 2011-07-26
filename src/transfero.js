@@ -3,7 +3,7 @@ Transfero = {};
 Transfero.Translator = function(apiKey, fromLang, toLang, options) {
     options = options || {};
     
-    this.setBackend(options.backend || Transfero.Backends.Microsoft);
+    this.setBackend(options.backend || this.constructor.defaultBackend);
     
     this.setFrom(fromLang);
     this.setTo(toLang);
@@ -13,7 +13,7 @@ Transfero.Translator = function(apiKey, fromLang, toLang, options) {
 };
 
 Transfero.Translator.prototype.translate = function(input, cb, scope) {
-    this.query('Translate', {
+    this.query('translate', {
         from: this.fromCode,
         to:   this.toCode,
         text: input
@@ -21,13 +21,13 @@ Transfero.Translator.prototype.translate = function(input, cb, scope) {
 };
 
 Transfero.Translator.prototype.detect = function(input, cb, scope) {
-    this.query('Detect', {
+    this.query('detect', {
         text: input
     }, cb, scope);
 };
 
 Transfero.Translator.prototype.speak = function(input, language, format, cb, scope) {
-    this.query('Speak', {
+    this.query('speak', {
         text:     input,
         language: this.langToCode(language),
         format:   'audio/wav'
@@ -85,7 +85,8 @@ Transfero.Translator.prototype.setBackend = function(backend) {
 
 Transfero.Backends = {
     Microsoft: {
-        query: function(method, params, cb, scope) {
+        query: function(action, params, cb, scope) {
+                action   = action.charAt(0).toUpperCase() + action.slice(1);
             var protocol = window.location.protocol,
                 script   = document.createElement('script'),
                 cbName   = this.nameCallback();
@@ -98,7 +99,7 @@ Transfero.Backends = {
             params.oncomplete = cbName;
             
             script.src = protocol + '//api.microsofttranslator.com/V2/Ajax.svc/' +
-                         method + '?' + this.buildQueryString(params);
+                         action + '?' + this.buildQueryString(params);
             
             window[cbName] = function(response) {
                 cb.call(scope || window, response);
@@ -108,6 +109,8 @@ Transfero.Backends = {
         }
     }
 };
+
+Transfero.Translator.defaultBackend = Transfero.Backends.Microsoft;
 
 Transfero.Languages = {
     ISO_639_1: {
