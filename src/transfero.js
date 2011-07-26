@@ -26,6 +26,14 @@ Transfero.Translator.prototype.detect = function(input, cb, scope) {
     }, cb, scope);
 };
 
+Transfero.Translator.prototype.speak = function(input, language, format, cb, scope) {
+    this.query('Speak', {
+        text:     input,
+        language: this.langToCode(language),
+        format:   'audio/wav'
+    }, cb, scope);
+};
+
 Transfero.Translator.prototype.buildQueryString = function(params) {
     var keyValuePairs = [], key;
     
