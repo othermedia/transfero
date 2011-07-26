@@ -30,7 +30,7 @@ Transfero.Translator.prototype.speak = function(input, language, format, cb, sco
     this.query('speak', {
         text:     input,
         language: this.langToCode(language),
-        format:   'audio/wav'
+        format:   format || 'audio/wav'
     }, cb, scope);
 };
 
