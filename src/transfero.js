@@ -20,6 +20,12 @@ Transfero.Translator.prototype.translate = function(input, cb, scope) {
     }, cb, scope);
 };
 
+Transfero.Translator.prototype.detect = function(input, cb, scope) {
+    this.query('Detect', {
+        text: input
+    }, cb, scope);
+};
+
 Transfero.Translator.prototype.buildQueryString = function(params) {
     var keyValuePairs = [], key;
     
