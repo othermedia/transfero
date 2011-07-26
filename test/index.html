@@ -2,16 +2,107 @@
 <html><head>
     <title>Transfero tests</title>
     
+    <style type="text/css">
+        .text {
+            float: left;
+            margin: 10px;
+        }
+        
+        textarea {
+            display: block;
+        }
+    </style>
+    
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
     <script type="text/javascript" src="lib/transfero-min.js"></script>
 </head><body>
+    <form action="" method="get" id="translate">
+        <div class="select-language">
+            <label for="select-input">From</label>
+            <select id="select-input" name="select-input">
+                <option selected>English</option>
+                <option>French</option>
+                <option>German</option>
+                <option>Spanish</option>
+            </select>
+            
+            <label for="select-output">To</label>
+            <select id="select-output" name="select-output">
+                <option>English</option>
+                <option selected>French</option>
+                <option>German</option>
+                <option>Spanish</option>
+            </select>
+            
+            <input type="submit" value="Translate">
+        </div>
+        
+        <div class="text">
+            <label for="input-text">Your text:</label>
+            <textarea name="input-text" id="input-text"
+                      rows="16" cols="40"></textarea>
+        </div>
+        
+        <div class="text">
+            <label for="output-text"><strong>English</strong> to <strong>French</strong> translation</label>
+            <textarea name="output-text" id="output-text"
+                      rows="16" cols="40"></textarea>
+        </div>
+    </form>
+    
     <script type="text/javascript">
         (function() {
-            Translator = new Transfero.Translator('9C3D7533977FB33E9A0B1CDE11CFDB2B934B66AB', 'English', 'French');
+            var fromSelect = $('#select-input'),
+                toSelect   = $('#select-output'),
+                
+                Translator = new Transfero.Translator('9C3D7533977FB33E9A0B1CDE11CFDB2B934B66AB',
+                    fromSelect.val(), toSelect.val()),
+                
+                input  = $('#input-text'),
+                output = $('#output-text'),
+                outputLabel = $('label[for="output-text"]');
             
-            Translator.translate("Hello world", function(response) {
-                console.log(response);
+            function updateOutput(text) {
+                Translator.translate(text, function(response) {
+                    output.html(response);
+                });
+            }
+            
+            function updateLabel() {
+                outputLabel.html('<strong>' + Translator.from + '</strong> to <strong>' + Translator.to + '</strong> translation');
+            }
+            
+            $('form#translate').bind('submit', function(evnt) {
+                evnt.preventDefault();
+                updateOutput(input.val());
             });
+            
+            input.bind('change keyup', function() {
+                updateOutput(this.value);
+            });
+            
+            fromSelect.bind('change', function() {
+                var from = this.value;
+                
+                if (from != Translator.from) {
+                    Translator.setFrom(from);
+                    updateLabel();
+                    updateOutput(input.val());
+                }
+            });
+            
+            toSelect.bind('change', function() {
+                var to = this.value;
+                
+                if (to != Translator.to) {
+                    Translator.setTo(to);
+                    updateLabel();
+                    updateOutput(input.val());
+                }
+            });
+            
+            input.html('Hello, world');
+            updateOutput(input.val());
         })();
     </script>
 <body></html>
