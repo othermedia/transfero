@@ -7,9 +7,9 @@
 </head><body>
     <script type="text/javascript">
         (function() {
-            var translator = new Transfero.Translator('9C3D7533977FB33E9A0B1CDE11CFDB2B934B66AB', 'English', 'French');
+            Translator = new Transfero.Translator('9C3D7533977FB33E9A0B1CDE11CFDB2B934B66AB', 'English', 'French');
             
-            translator.translate("Hello world", function(response) {
+            Translator.translate("Hello world", function(response) {
                 console.log(response);
             });
         })();

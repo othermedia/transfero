@@ -9,16 +9,16 @@ Transfero.Translator = function(apiKey, fromLang, toLang, options) {
         cfrom = codes[fromLang],
         cto   = codes[toLang];
     
-    this.apiKey       = apiKey;
-    this.fromLanguage = typeof cfrom == 'string' && cfrom.length == 2 ? cfrom : (fromLang || 'fr');
-    this.toLanguage   = typeof cto == 'string' && cto.length == 2 ? cto : (toLang || 'fr');
-    this._cbCount     = 0;
+    this.apiKey   = apiKey;
+    this.from     = typeof cfrom == 'string' && cfrom.length == 2 ? cfrom : (fromLang || 'fr');
+    this.to       = typeof cto == 'string' && cto.length == 2 ? cto : (toLang || 'fr');
+    this._cbCount = 0;
 };
 
 Transfero.Translator.prototype.translate = function(input, cb, scope) {
     this.query('Translate', {
-        from: this.fromLanguage,
-        to:   this.toLanguage,
+        from: this.from,
+        to:   this.to,
         text: input
     }, cb, scope);
 };
