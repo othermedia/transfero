@@ -42,13 +42,16 @@ Transfero.Translator.prototype.nameCallback = function() {
 };
 
 Transfero.Translator.prototype.setFrom = function(from) {
-    var cfrom = Transfero.Languages.ISO_639_1[from];
-    this.from = typeof cfrom == 'string' && cfrom.length == 2 ? cfrom : from;
+    this.from = this.langToCode(from);
 };
 
 Transfero.Translator.prototype.setTo = function(to) {
-    var cto = Transfero.Languages.ISO_639_1[to];
-    this.to = typeof cto == 'string' && cto.length == 2 ? cto : to;
+    this.to = this.langToCode(to);
+};
+
+Transfero.Translator.prototype.langToCode = function(lang) {
+    var code = Transfero.Languages.ISO_639_1[lang];
+    return typeof code == 'string' && code.length == 2 ? code : lang;
 };
 
 Transfero.Translator.prototype.setBackend = function(backend) {
