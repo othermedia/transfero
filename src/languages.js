@@ -46,15 +46,16 @@ Transfero.Languages = {
         'Hausa':          'HA',
         'Hindi':          'HI',
         'Croatian':       'HR',
+        'Haitian Creole': 'HT',
         'Hungarian':      'HU',
         'Armenian':       'HY',
         'Interlingua':    'IA',
         'Interlingue':    'IE',
         'Inupiak':        'IK',
-        'Indonesian':     'IN',
+        'Indonesian':     'ID',
         'Icelandic':      'IS',
         'Italian':        'IT',
-        'Hebrew':         'IW',
+        'Hebrew':         'HE',
         'Japanese':       'JA',
         'Yiddish':        'JI',
         'Javanese':       'JW',
@@ -141,6 +142,8 @@ Transfero.Languages = {
         'Xhosa':          'XH',
         'Yoruba':         'YO',
         'Chinese':        'ZH',
+        'Chinese Simplified':		'ZH-CHS',
+        'Chinese Traditional':		'ZH-CHT',
         'Zulu':           'ZU'
     }
 };

@@ -67,7 +67,7 @@ Transfero.Translator.prototype.setTo = function(to) {
 
 Transfero.Translator.prototype.langToCode = function(lang) {
     var code = Transfero.Languages.ISO_639_1[lang];
-    return typeof code == 'string' && code.length == 2 ? code : null;
+    return typeof code == 'string' ? code : null;
 };
 
 Transfero.Translator.prototype.setBackend = function(backend) {
